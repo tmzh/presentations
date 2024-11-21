@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitchikers Guide to Large Language Models</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css" />
+    <!-- <link rel="stylesheet" href="dist/theme/dracula.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+    <style>
+        .special-header {
+            position: absolute;
+            padding: 10px 20px 10px 20px;
+            top: 30px;
+            left: 0px;
+            z-index: 500;
+            /*background-color: rgba(0,0,0,0.5)*/
+        }
+
+        .special-body {
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            /*-ms-transform: translate(-50%, 50%);*/
+            transform: translate(0%, -50%);
+        }
+
+        .slides>section {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Hitchikers Guide to Large Language Models</h1>
+            </section>
+            <section>
+                <section data-auto-animate>
+                    <h2>Who is this for?</h2>
+                </section>
+
+                <section data-auto-animate>
+                    <h2>Who is this for?</h2>
+                    <img src="images/llm_journey.jpg" alt="LLM Journey" />
+                </section>
+
+                <aside class="notes">
+                    <ul>
+                        <li><strong>AI Enthusiasts:</strong> Discover how to leverage the power of large language models
+                            for
+                            various applications.</li>
+                        <li><strong>Developers:</strong> Learn how to use the LLMs for various applications such as text
+                            generation, chatbots, and more.</li>
+                        <li><strong>Researchers:</strong> Explore the capabilities and limitations of LLM models and
+                            their
+                            potential applications in various fields.</li>
+                    </ul>
+                    <p>- Most academia focuses on architecture, training algorithms, and losses.</p>
+                    <p>- Industry emphasizes data, evaluation, and system efficiency.</p>
+                    <p>- You may be put off by all these talks on architecture, algorithm etc., but there is a lot of
+                        value
+                        to be derived from understanding the basics.</p>
+                </aside>
+
+            </section>
+
+            <section>
+                <section>
+                    <h3>What is a Large Language Model?</h3>
+                    <p>LLMs are merely models that predict next word in a sequence</p>
+                    <img src="images/llm_predict.png" alt="LLM Prediction" />
+                    <aside class="notes">
+                        <ul>
+                            <li>Language modeling is at the heart of LLMs.</li>
+                            <li>Models can generate, summarize, translate, and answer questions.</li>
+                            <li>LLMs are trained to generate coherent text</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>LLMs are a proxy model of the real world</h3>
+                    <div class="r-hstack justify-center" style="height: 400px;">
+                        <div class="box fragment" data-fragment-index="2"
+                            style="background: #D8BFD8; width: 240px; border-radius: 5px;">LLM</div>
+                        <div class="arrow fragment r-fit" data-fragment-index="2"
+                            style="width: 150px; text-align: center;">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                        <div class="box fragment" data-fragment-index="1"
+                            style="background: #B0E0E6; width: 240px; border-radius: 5px;">Language</div>
+                        <div class="arrow fragment r-fit" data-fragment-index="1"
+                            style="width: 150px; text-align: center;">
+                            <i class="fa fa-arrow-right"></i>
+                        </div>
+                        <div class="box fragment" data-fragment-index="0"
+                            style="background: #60A68C; width: 240px; border-radius: 5px;">World</div>
+                    </div>
+                    <div class="fragment" data-fragment-index="3">
+                        By learning and modelling language, LLMs can understand and model the world.
+                    </div>
+                    <aside class="notes">
+                        <p>LLMs are a proxy model of the real world.</p>
+                    </aside>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h3>How to train your dragon
+                        model?</h3>
+                    <ul>
+                        <li class="fragment">Borrow few 100 million dollars</li>
+                        <li class="fragment">Download all of internet (250B pages; >1PB of data)</li>
+                        <li class="fragment">Train for 2-3 months on several thousand GPUs</li>
+                    </ul>
+                    <aside class="notes">
+                        <p>Training is a complex process requiring significant infrastructure and investment.</p>
+                    </aside>
+                </section>
+                <section>
+                    <h3>Training costs big bucks</h3>
+                    <img src="images/openai compute cost.jpg" alt="Training Cost" />
+                    <aside>
+                        today’s models cost of order $100 million to train, plus or minus factor two or three
+                        The models that are in training now and that will come out at various times later this year or
+                        early next year are closer in cost to $1 billion
+                        in 2025 and 2026, we’ll get more towards $5 or $10 billion
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Typical composition of Training data</h3>
+                    <img src="images/composition-of-pile.png" alt="Composition of Pile" />
+                    <aside class="notes">
+                        <p>Distribution of data in Pile and its composition.</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>What is in a trained model?</h3>
+                    <img class="r-stretch" src="images/llm_files.png" alt="LLM Components" />
+                    <aside class="notes">
+                        <p>Think of it as a zip file compressing the internet.</p>
+                    </aside>
+                </section>
+
+            </section>
+
+            <section>
+                <section>
+                    <h3>But Pre-training is Just the Beginning</h3>
+                    <img src="images/llama_pretrained.jpg" alt="Pretrained Model" />
+                    <aside class="notes">
+                        <p>Pre-training alone is not sufficient for a functional language model.</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Training Chat assistants</h3>
+                    <img src="images/chat_assistant.excalidraw.png" alt="LLM Alignment" />
+                    <aside class="notes">
+                        <p>LLMs transition to complex assistant models through SFT and RLHF.</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Supervised Fine-tuning</h3>
+                    <img class="r-stretch" src="images/models_sft.jpg" alt="Models SFT" />
+                    <aside class="notes">
+                        <p>SFT uses high-quality supervised datasets to train models.</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Reinforcement Learning from Human Feedback (RLHF)</h3>
+                    <img src="images/rlhf.png" alt="RLHF" />
+                    <aside class="notes">
+                        <p>RLHF aligns models with human expectations through comparison labels.</p>
+                    </aside>
+                </section>
+            </section>
+
+
+            <section>
+                <h2>How Does a Model Predict the Next Word?</h2>
+                <div class="r-stack">
+                    <img class="fragment" src="frames/img0001.png" alt="frame 1">
+                    <img class="fragment" src="frames/img0002.png" alt="frame 2">
+                    <img class="fragment" src="frames/img0003.png" alt="frame 3">
+                    <img class="fragment" src="frames/img0004.png" alt="frame 4">
+                    <img class="fragment" src="frames/img0005.png" alt="frame 5">
+                    <img class="fragment" src="frames/img0006.png" alt="frame 6">
+                    <img class="fragment" src="frames/img0007.png" alt="frame 7">
+                    <img class="fragment" src="frames/img0008.png" alt="frame 8">
+                    <img class="fragment" src="frames/img0009.png" alt="frame 9">
+                    <img class="fragment" src="frames/img0010.png" alt="frame 10">
+                    <img class="fragment" src="frames/img0011.png" alt="frame 11">
+                    <img class="fragment" src="frames/img0012.png" alt="frame 12">
+                    <img class="fragment" src="frames/img0013.png" alt="frame 13">
+                    <img class="fragment" src="frames/img0014.png" alt="frame 14">
+                    <img class="fragment" src="frames/img0015.png" alt="frame 15">
+                    <img class="fragment" src="frames/img0016.png" alt="frame 16">
+                    <img class="fragment" src="frames/img0017.png" alt="frame 17">
+                    <img class="fragment" src="frames/img0018.png" alt="frame 18">
+                    <img class="fragment" src="frames/img0019.png" alt="frame 19">
+                    <img class="fragment" src="frames/img0020.png" alt="frame 20">
+                    <img class="fragment" src="frames/img0021.png" alt="frame 21">
+                    <img class="fragment" src="frames/img0022.png" alt="frame 22">
+                    <img class="fragment" src="frames/img0023.png" alt="frame 23">
+                    <img class="fragment" src="frames/img0024.png" alt="frame 24">
+                    <img class="fragment" src="frames/img0025.png" alt="frame 25">
+                    <img class="fragment" src="frames/img0026.png" alt="frame 26">
+                    <img class="fragment" src="frames/img0027.png" alt="frame 27">
+                    <img class="fragment" src="frames/img0028.png" alt="frame 28">
+                    <img class="fragment" src="frames/img0029.png" alt="frame 29">
+                </div>
+                <a href="https://lena-voita.github.io/nlp_course/language_modeling.html" class="footer">Source</a>
+            </section>
+
+            <section>
+                <section>
+                    <h2>How to use Large Language Models</h2>
+                </section>
+
+                <section>
+                    <h3>Selecting a model: Proprietary</h3>
+                    <img src="images/openai_models.jpg" alt="Model Selection" />
+                </section>
+
+                <section>
+                    <h3>Inspecting a model: Open Source</h3>
+                    <pre><code data-line-numbers="|12|24|">{
+      "architectures": [
+        "MistralForCausalLM"
+      ],
+      "attention_dropout": 0.0,
+      "bos_token_id": 1,
+      "eos_token_id": 2,
+      "hidden_act": "silu",
+      "hidden_size": 4096,
+      "initializer_range": 0.02,
+      "intermediate_size": 14336,
+      "max_position_embeddings": 32768,
+      "model_type": "mistral",
+      "num_attention_heads": 32,
+      "num_hidden_layers": 32,
+      "num_key_value_heads": 8,
+      "rms_norm_eps": 1e-05,
+      "rope_theta": 1000000.0,
+      "sliding_window": null,
+      "tie_word_embeddings": false,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.42.0.dev0",
+      "use_cache": true,
+      "vocab_size": 32768
+    }</code>
+</pre>
+                </section>
+
+                <section>
+                    <h3>Example API request to OpenAI</h3>
+                    <pre><code data-line-numbers="|10|11|12|">from openai import OpenAI
+    client = OpenAI()
+    
+    completion = client.chat.completions.create(
+      model="gpt-3.5-turbo",
+      messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
+      ],
+      temperature=0.7,
+      top_p=0.95, # use top_p or temp, not both
+      top_logprobs=3,
+      max_tokens=1000,
+    )
+    </code>
+</pre>
+                </section>
+
+                <section>
+                    <h3>Example use of Mistral using Huggingface library</h3>
+                    <pre><code data-line-numbers="|13|14|15|">from transformers import AutoTokenizer, AutoModelForCausalLM
+    
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
+    model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
+    
+    inputs = tokenizer("Hello, my name is", return_tensors="pt")
+    
+    # Similar settings to OpenAI's API
+    outputs = model.generate(
+        **inputs,
+        max_length=1000,
+        do_sample=True,
+        temperature=0.7,
+        top_p=0.95,
+        top_k=0,
+        num_return_sequences=1,
+    )
+    </code></pre>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h1>Knobs and controls of LLMs</h1>
+                </section>
+                <section>
+                    <h4>Temperature controlling</h3>
+                        <img src="images/temperature.png" alt="Temperature Control" />
+                        <aside class="notes">
+                            <p>Higher temperature increases randomness in predictions.</p>
+                        </aside>
+                </section>
+
+                <section>
+                    <h4>Top-k sampling</h4>
+                    <img src="images/topk_problems-min.png" alt="Top-k Sampling" />
+                    <aside class="notes">
+                        <p>Top-k sampling can cover small parts of the probability mass.</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h4>Top-p sampling</h4>
+                    <img src="images/nucleus_example-min.png" alt="Top-p Sampling" />
+                </section>
+
+                <section>
+                    <h3>Understanding Tokens</h3>
+                    <p class="fragment" data-fragment-index="0">Tokens are the smallest units of text recognized by
+                        models.</p>
+                    <p class="fragment" data-fragment-index="1"><strong>1000 tokens ≈ 750 words</strong></p>
+                    <p class="fragment" data-fragment-index="2">Models can only process a fixed context length measured
+                        in tokens.</p>
+                </section>
+
+                <section>
+                    <h3>Splitting text into tokens</h3>
+                    <div class="header-underline"> It is raining </div>
+                    <p class="fragment" data-fragment-index="0">Character level tokenization</p>
+                    <div class="token-row">
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #F0E68C;">I
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #FFB6C1;">t
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #D8BFD8;">
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #B0E0E6;">i
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #FFB6C1;">s
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #D8BFD8;">
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #B0E0E6;">r
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #F0E68C;">a
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #B0E0E6;">i
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #FFB6C1;">n
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #B0E0E6;">i
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #FFB6C1;">n
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #F0E68C;">g
+                        </div>
+                        <div class="fragment token-box" data-fragment-index="1" style="background-color: #D8BFD8;">.
+                        </div>
+                    </div>
+                    <p class="fragment" data-fragment-index="4">Sub-word level tokenization</p>
+                    <div class="token-row">
+                        <div class="fragment token-box word" data-fragment-index="5" style="background-color: #F0E68C;">
+                            It
+                        </div>
+                        <div class="fragment token-box word" data-fragment-index="5" style="background-color: #FFB6C1;">
+                            is
+                        </div>
+                        <div class="fragment token-box word" data-fragment-index="5" style="background-color: #D8BFD8;">
+                            rain
+                        </div>
+                        <div class="fragment token-box word" data-fragment-index="5" style="background-color: #B0E0E6;">
+                            ing
+                        </div>
+                        <div class="fragment token-box word" data-fragment-index="5" style="background-color: #F0E68C;">
+                            .
+                        </div>
+                    </div>
+                    <p class="fragment" data-fragment-index="2">Word level tokenization</p>
+                    <div class="token-row">
+                        <div class="fragment token-box word" data-fragment-index="3" style="background-color: #F0E68C;">
+                            It
+                        </div>
+                        <div class="fragment token-box word" data-fragment-index="3" style="background-color: #FFB6C1;">
+                            is
+                        </div>
+                        <div class="fragment token-box word" data-fragment-index="3" style="background-color: #D8BFD8;">
+                            raining</div>
+                        <div class="fragment token-box word" data-fragment-index="3" style="background-color: #B0E0E6;">
+                            .
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+
+            <section>
+                <section>
+                    <h1>Addressing LLM Limitations</h1>
+                </section>
+
+                <section>
+                    <h3>Characteristics of LLMs</h3>
+                    <br>
+                    <ul style="list-style-type: none;">
+                        <li><span class="fragment">🔄 Predicts next token</span><span class="fragment">
+                                stochastically</span></li>
+                        <li><span class="fragment">🧩 Coherent</span><span class="fragment"> within fixed context
+                                length.</span></li>
+                        <li><span class="fragment">📖 Built-in Knowledge </span><span class="fragment"> with a cut-off
+                                date</span></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Retriever-augmented generation (RAG)</h3>
+                    <img class="r-stretch" src="images/rag.png" alt="RAG">
+                    <aside class="notes">
+                        RAG works around hallucination and knowledge cutoff limitations by grounding the model's
+                        responses in data retrieved from a knowledgebase.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Tool Use</h3>
+                    <img class="r-stretch" src="images/function-calling-diagram.png" alt="Function Calling">
+                    <aside class="notes">
+                        Just like RAG, supplement LLMs with knowledge from external tools. Circumvents knowledge
+                        cut-off,
+                        abstract reasoning limitations.
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Deliberate problem solving using thoughts</h3>
+                    <img class="r-stretch" src="images/llm_thinking.jpg" alt="CoT">
+                    <aside class="notes">
+                        LLMs are encouraged to generate, search and evaluate thoughts as a coherent language sequence
+                        that
+                        serves as an intermediate step toward problem solving. Tradeoff is that it increases the length
+                        of
+                        the prompt and the response. This is the method used in O1 models announced by Open AI.
+                    </aside>
+                </section>
+
+            </section>
+
+            <section>
+                <section>
+                    <h1>Choosing the Right Large Language Model (LLM)</h1>
+                </section>
+
+                <section>
+                    <h3>1. Understanding LLM Types</h3>
+                    <div class="r-hstack">
+                        <div class="fragment fade-left div-box">
+                            <strong>Pre-trained Models</strong>
+                            <ul>
+                                <li>e.g., Llama 3, GPT Base</li>
+                            </ul>
+                        </div>
+                        <div class="fragment fade-left div-box">
+                            <strong>Instruct-Tuned Variants</strong>
+                            <ul>
+                                <li>e.g., GPT-3.5-turbo, Llama-3.2-3B-Instruct</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="r-hstack">
+                        <div class="fragment fade-left div-box">
+                            <strong>Coding Assistants</strong>
+                            <ul>
+                                <li>Codestral, CodeLlama, Davinci Codex etc.</li>
+                            </ul>
+                        </div>
+                        <div class="fragment fade-left div-box">
+                            <strong>Mixture-of-Experts</strong>
+                            <ul>
+                                <li>e.g., GPT-4, Mixtral</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <aside class="notes">
+                        <ul>
+                            <li class="fragment fade-in-then-out"><strong>Pre-trained Models:</strong> Foundation models
+                                trained on massive datasets (e.g., Llama 3, GPT Base). These are general-purpose but may
+                                require further fine-tuning.</li>
+                            <li class="fragment fade-in-then-out"><strong>Instruction-Tuned Models:</strong> Pre-trained
+                                models further trained on instructions, leading to better adherence to user prompts
+                                (e.g., GPT-3.5-turbo, Llama-3.2-3B-Instruct).</li>
+                            <li class="fragment fade-in-then-out"><strong>Specialized Models:</strong> Models tailored
+                                for specific tasks like code generation (e.g., Codestral, CodeLlama, Davinci Codex)</li>
+                            <li>Mixture-of-Experts: Models that combine the strengths of multiple smaller models,
+                                allowing for more specialized and efficient task handling (e.g., GPT-4, Mixtral).</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+
+                    <h2>2. Evaluating LLM Performance</h2>
+                    <p>Evaluating LLMs is complex and multifaceted. There's no single perfect metric.</p>
+                    <ul>
+                        <li class="fragment fade-in-then-out"><strong>Benchmarks:</strong> Task-specific, tricky broader
+                            applicability</li>
+                        <li class="fragment fade-in-then-out"><strong>Human Evaluation:</strong> Inconsistent,
+                            challenging consensus
+                        </li>
+                        <li class="fragment fade-in-then-out"><strong>Bot Evaluation:</strong> Not always aligned with
+                            human
+                            judgement
+                        </li>
+                    </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li><strong>Benchmarks:</strong> Task-specific tests offer
+                                quantitative comparisons, but may not fully capture real-world performance.</li>
+                            <li><strong>Human Evaluation:</strong> Essential for
+                                assessing
+                                aspects like fluency, coherence, and factual accuracy, but prone to subjectivity and
+                                inconsistency.</li>
+                            <li>Why not use bot evaluation? Bots may not always align with human judgement, and they can
+                                be influenced by biases and limitations.</li>
+                        </ul>
+
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>3. Practical Considerations</h2>
+                </section>
+
+                <section>
+                    <h3>3.1 Licensing and Legal</h3>
+                    <ul>
+                        <li class="fragment"><strong>Commercial Services</strong>
+                            <ul>
+                                <li>Regional availability</li>
+                                <li>Data Protection Compliance</li>
+                            </ul>
+                        </li>
+                        <li class="fragment"><strong>Open Weights</strong>
+                            <ul>
+                                <li>Availability ≠ free use</li>
+                                <li>Verify licensing restrictions</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>3.2 Cost and Resource Requirements</h3>
+                </section>
+
+                <section>
+                    <h4>Model size</h4>
+                    <img class="r-stretch" src="images/size_vs_throughput.jpg" alt="Model Size">
+                    <p>More Params -> Expensive & Slower</p>
+                    <aside class="notes">
+                        Model Size and Throughput: Larger models generally offer better performance but demand more
+                        computational resources, impacting cost and inference speed. This can be visualized using the
+                        image `size_vs_throughput.jpg`.
+
+                    </aside>
+                </section>
+                <section>
+                    <h4>Cost vs Performance</h4>
+                    <img src="images/llm_cost.jpg" alt="">
+                    <div>For common tasks, most models would do OK.</div>
+                    <aside class="notes">
+                        For many common tasks, the performance difference between models might not justify the
+                        significant cost increase.
+                    </aside>
+                </section>
+
+                <section>
+                    <h4>Context Length</h4>
+                    <img src="images/context_sizes.jpg" alt="Context Length">
+                    Models with larger context windows can handle longer conversations and docuemnts.
+                    <aside class="notes">
+                        "Context Length: The amount of text a model can process at once. Longer context windows are
+                        beneficial for handling lengthy documents or extended conversations."
+
+                    </aside>
+                </section>
+
+                <section>
+                    <h4>Self-Hosting</h4>
+                    <img src="images/self-hosting-roi.jpg" alt="Self-Hosting">
+                    <p>Upfront Investment in GPUs ≠ Cost Savings</p>
+                    <aside>
+
+                        Self-Hosting: Significant upfront investment in hardware (GPUs) is required, accompanied by
+                        maintenance. Cost savings are not guaranteed. (Image: `self-hosting-roi.jpg` explained the
+                        return on investment for self-hosting.)
+                        Nvidia, literally pitched to their investors & datacenter customers, in their 2023 investor
+                        presentation - the “market opportunity” on renting H100s at $4/hr
+                        For most of 2023, the H100 prices felt like they would forever be above $4.70 (unless you
+                        were
+                        willing to do a huge upfront downpayment)
+                        At the start of 2024, the H100 prices reached approximately $2.85 across multiple providers.
+                        In Aug 2024, if you're willing to auction for a small slice of H100 time (days to weeks),
+                        you can start finding H100 GPUs for $1 to $2 an hour.
+                    </aside>
+                </section>
+
+
+
+                <!-- 
+            <section>
+                <section>
+                    <h1>What to look for when choosing a model?</h1>
+                </section>
+                <section>
+                    <h2>Model Types</h2>
+                    <div class="r-hstack">
+                        <div class="fragment fade-left div-box">
+                            <strong>Pre-trained Models</strong>
+                            <ul>
+                                <li>e.g., Llama 3, GPT Base</li>
+                            </ul>
+                        </div>
+                        <div class="fragment fade-left div-box">
+                            <strong>Instruct-Tuned Variants</strong>
+                            <ul>
+                                <li>e.g., GPT-3.5-turbo, Llama-3.2-3B-Instruct</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="r-hstack">
+                        <div class="fragment fade-left div-box">
+                            <strong>Coding Assistants</strong>
+                            <ul>
+                                <li>Codestral, CodeLlama, Davinci Codex etc.</li>
+                            </ul>
+                        </div>
+                        <div class="fragment fade-left div-box">
+                            <strong>Mixture-of-Experts</strong>
+                            <ul>
+                                <li>e.g., GPT-4, Mixtral</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>How good is a model?</h2>
+                </section>
+                <section>
+                    <h2>Evaluating LLMs is hard</h2>
+
+                    <ul>
+                        <li>🎯 Using benchmarks <i class="fas fa-arrow-right"></i> task-specific, tricky broader
+                            evaluation</li>
+                        <li>👥 Human evaluations <i class="fas fa-arrow-right"></i> inconsistent, challenging consensus
+                        </li>
+                        <li>🤖 vs 👤 Disagreement between metrics & human judgment </li>
+                        <li>🌐 Don't reflect performance in real-world</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>How are LLMs evaluated?</h3>
+                    <img class="r-stretch" src="images/evaluation_datasets.jpg" alt="Evaluation Datasets">
+                </section>
+                <section>
+                    <h3>🎯 Task-Specific Metrics</h3>
+                    <ul>
+                        <li>📊 Perplexity -> Language modeling</li>
+                        <li>🔢 Pass@K -> Open-ended tasks (e.g., code generation)</li>
+                        <li>✅ Accuracy -> Pre-defined answers (e.g., Q&A)</li>
+                        <li>🔄 BLEU/ROUGE -> Reference-based tasks (e.g., translation)</li>
+                        </li>
+                    </ul>
+                </section> 
+
+            <section>
+                <h3>LM Chatbot Arena</h3>
+                <img src="images/lmsys_chatbot_arena.jpg" alt="LM Chatbot Arena">
+                <div>🏆 Elo rating system for model ranking</div>
+                <aside class="notes">
+                    <ul>
+                        <li>🤖 Comparative evaluation platform for language models</li>
+                        <li>👥 Crowdsourced human judgments</li>
+                        <li>🔄 Continuous updates with new models</li>
+                        <li>🔍 Insights into model strengths and weaknesses</li>
+                        <li>provides a dynamic, user-driven approach to LLM evaluation </li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section>
+                <h3>Aider LLM Leaderboards</h3>
+                <img src="images/aider_code_editing_benchmark.jpg" alt="LM Chatbot Arena">
+                <div>🏆 Elo rating system for model ranking</div>
+                <aside class="notes">
+                    <ul>
+                        <li>🤖 Comparative evaluation platform for language models</li>
+                        <li>👥 Crowdsourced human judgments</li>
+                        <li>🔄 Continuous updates with new models</li>
+                        <li>🔍 Insights into model strengths and weaknesses</li>
+                        <li>provides a dynamic, user-driven approach to LLM evaluation </li>
+                    </ul>
+                </aside>
+            </section>
+
+
+            <section>
+                <h3>Licensing Considerations</h3>
+                <ul>
+                    <li class="fragment"><strong>Commercial Services</strong>
+                        <ul>
+                            <li>Regional availability</li>
+                            <li>Data Protection Compliance</li>
+                        </ul>
+                    </li>
+                    <li class="fragment"><strong>Open Weights</strong>
+                        <ul>
+                            <li>Availability ≠ free use</li>
+                            <li>Verify licensing restrictions</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Cost Factors</h3>
+            </section>
+            <section>
+                <h4>Model size</h4>
+                <img class="r-stretch" src="images/size_vs_throughput.jpg" alt="Model Size">
+                <p>More Params -> Expensive & Slower</p>
+            </section>
+            <section>
+                <h4>Cost vs Performance</h4>
+                <img src="images/llm_cost.jpg" alt="">
+                <div>For common tasks, most models would do OK.</div>
+            </section>
+
+            <section>
+                <h4>Context Length</h4>
+                <img src="images/context_sizes.jpg" alt="Context Length">
+                Models with larger context windows can handle longer conversations and docuemnts.
+            </section>
+
+            <section>
+                <h4>Self-Hosting</h4>
+                <img src="images/self-hosting-roi.jpg" alt="Self-Hosting">
+                <p>Upfront Investment in GPUs ≠ Cost Savings</p>
+                <aside>
+                    Nvidia, literally pitched to their investors & datacenter customers, in their 2023 investor
+                    presentation - the “market opportunity” on renting H100s at $4/hr
+                    For most of 2023, the H100 prices felt like they would forever be above $4.70 (unless you
+                    were
+                    willing to do a huge upfront downpayment)
+                    At the start of 2024, the H100 prices reached approximately $2.85 across multiple providers.
+                    In Aug 2024, if you're willing to auction for a small slice of H100 time (days to weeks),
+                    you can start finding H100 GPUs for $1 to $2 an hour.
+                </aside>
+            </section>
+
+            </section> 
+        -->
+
+                <section>
+                    <section>
+                        <h2>The current state-of-play in AI</h2>
+                        <img src="images/closed_vs_open.png" alt="">
+                        <aside>
+                            OpenAI had a year+ lead in creating a GPT-4 class model.
+                            Now there are four GPT-4 class models.
+                            Llama 3.2 closes the gap between closed-source and open-weight models
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Open AI</h2>
+                        <div style="text-align: left;">
+                            <strong>Models:</strong>
+                            <ul>
+                                <li>Pre-trained & Instruct-tuned: GPT3, GPT4, GPT 3.5 Turbo, GPT 4 Turbo</li>
+                                <li>Multi-modal & generation: GPT4 Vision, GPT4o, GPT4o-mini, Whisper, Suno, DALL-E 3
+                                </li>
+                                <li>Reasoning: o1, o1-mini</li>
+                            </ul>
+                            <strong>Notable features:</strong>
+                            <ul>
+                                <li>🤝 Strategic investment from Microsoft</li>
+                                <li>🔧 Fine-tuning API offered</li>
+                                <li>📞 Function calling, 📊 JSON mode, 💾 Context-caching (since Oct 2024)
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Anthropic</h2>
+                        <div style="text-align: left;">
+                            <strong>Models:</strong>
+                            <div>
+                                <ul>
+                                    <li>Claude 3.0 Haiku, Sonnet, Opus</li>
+                                    <li>Claude 3.5 Sonnet</li>
+                                </ul>
+                            </div>
+                            <strong>Key features:</strong>
+                            <ul>
+                                <li>👤 Founded by Dario Amodei (ex-VP of OpenAI)</li>
+                                <li>⚡ Sonnet 3.5: Top performing model, comparable performance to GPT-4o</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Google</h2>
+                        <div style="text-align: left;">
+                            <strong>Models:</strong>
+                            <ul>
+                                <li>Open Models: Gemma-1 (2B, 7B), Gemma-2 (2B, 9B, 27B)</li>
+                                <li>Proprietary Models: Gemini 1.5 (128B), Gemini 2 (540B)</li>
+                            </ul>
+                            <strong>Key features:</strong>
+                            <ul>
+                                <li>Gemma: Lightweight, strong open models; pre-trained on 2T-13T English tokens</li>
+                                <li>Gemini: Long context (2M tokens) & pioneered context caching</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Alibaba Cloud</h2>
+                        <div style="text-align: left;">
+                            <strong>Model Series:</strong>
+                            <ul>
+                                <li>Qwen, Qwen1.5, Qwen2, Qwen2.5 (0.5B - 110B)</li>
+                            </ul>
+                            <strong>Qwen2.5 Highlights:</strong>
+                            <ul>
+                                <li>📚 18T token pre-training</li>
+                                <li>💡 Enhanced knowledge, coding & math skills</li>
+                                <li>📄 8K+ token generation & structured data handling</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Meta</h2>
+                        <div style="text-align: left;">
+                            <strong>Model Series:</strong>
+                            <ul>
+                                <li>LLaMA: 7B-65B; LLaMA 2: 7B-70B; LLaMA 3/3.1/3.2: 8B-405B</li>
+                            </ul>
+                            <strong>LLaMA 3.2 Highlights:</strong>
+                            <ul>
+                                <li>🏆 Competitive with GPT-4, GPT-4o, Claude 3.5 Sonnet</li>
+                                <li>📊 405B params, 15T tokens, 128K context</li>
+                                <li>💻 Training scale-up: 2,048 A100 (65B) → 16,000+ H100 (405B)</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2>Mistral</h2>
+                        <div style="text-align: left;">
+                            <strong>Models:</strong>
+                            <ul>
+                                <li>Open Models: Mistral (7B), Mistral Nemo (12B), Pixtral (22B), Codestral (22B)</li>
+                                <li>Proprietary Models: Large 2 (123B), Mixtral (8×7B, 8×22B)</li>
+                            </ul>
+                            <strong>Key features:</strong>
+                            <ul>
+                                <li>🇫🇷 French startup, Apache 2 licensed models</li>
+                                <li>Proprietary models on Le Platform; fine-tuning API offered</li>
+                                <li>Mistral 7B outperforms larger models; Large 2 matches top models like GPT-4o, Llama
+                                    3
+                                    405B</li>
+
+                            </ul>
+                        </div>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h1>LLMs power more than just text</h1>
+                    </section>
+
+                    <section>
+                        <h2>Understand and generate images</h2>
+                        <img class="r-stretch" src="images/sketch_to_site.jpg" alt="Image Generation">
+                    </section>
+
+                    <section>
+                        <h2>Interact using voice</h2>
+                        <img class="r-stretch" src="images/speech_to_speech.jpg" alt="Voice Interaction">
+                    </section>
+
+                    <section>
+                        <h2>Making Music</h2>
+                        <img class="r-stretch" src="images/music_gen.jpg" alt="Music Generation">
+                    </section>
+
+                    <section>
+                        <h2>Video Generation</h2>
+                        <video class="r-stretch" src="images/penguin.mp4" controls></video>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Future Directions in GenAI</h1>
+                    </section>
+
+                    <section>
+                        <h2>Scaling Laws of Large models</h2>
+                        <img class="r-stretch" src="images/chinchilla_scaling.jpg" alt="Scaling Laws">
+                        <p>Models are not showing signs of upper limit of performance.</p>
+                    </section>
+
+                    <section>
+                        <video class="r-stretch" src="images/HLS_720.mp4" controls></video>
+                    </section>
+
+                </section>
+        </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/search/search.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            center: true,
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+        });
+    </script>
+
+</body>

@@ -1,0 +1,80 @@
+.footer {
+    font-size: 0.5em;
+}
+
+.container {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+/* Header Underline */
+.header-underline {
+    border-bottom: 2px solid green;
+    padding-bottom: 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+}
+
+/* Token Row */
+.token-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+/* Token Box */
+.token-box {
+    padding: 10px;
+    margin: 5px;
+    /* border-radius: 10px; */
+    min-width: 24px;
+    font-size: 0.8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+
+/* Box */
+.div-box {
+    padding: 50px;
+    margin: 5px;
+    border-radius: 10px;
+    min-width: 480px;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+.div-box-2-columns {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    width: calc((var(--slide-width) / 2) - 5px);
+    /* Subtract 10px for margins */
+    font-size: 0.8em;
+    text-align: left;
+    box-sizing: border-box;
+    /* Include padding and border in element's total width and height */
+}
+
+
+.div-box-3-columns {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    width: calc((var(--slide-width) / 3) - 5px);
+    /* Subtract 10px for margins */
+    font-size: 0.8em;
+    text-align: left;
+    box-sizing: border-box;
+    /* Include padding and border in element's total width and height */
+}
+
+
+/* Word-level Token Box (wider) */
+.token-box.word {
+    min-width: 60px;
+}
