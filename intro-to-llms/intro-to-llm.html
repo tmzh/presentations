@@ -60,44 +60,59 @@
                 <section data-auto-animate>
                     <h2>Who is this for?</h2>
                     <img src="images/llm_journey.jpg" alt="LLM Journey" />
-                </section>
 
-                <aside class="notes">
+                    <aside class="notes">
+                        <ul>
+                            <li><strong>AI Enthusiasts:</strong> General users of AI applications. Curious about its
+                                capabilities and limitations </li>
+                            <li><strong>Developers:</strong> Build applications that use the LLMs for various
+                                applications such as
+                                text
+                                generation, chatbots, and more.</li>
+                            <li><strong>Researchers:</strong> Focus on architecture, training algorithms, and losses.
+                            </li>
+                        </ul>
+                        <p>- Most academia focuses on architecture, training algorithms, and losses.</p>
+                        <p>- Industry emphasizes data, evaluation, and system efficiency.</p>
+                        <p>- You may be put off by all these talks on architecture, algorithm etc., but there is a lot
+                            of
+                            value
+                            to be derived from understanding the basics and using in real-life applications.</p>
+                    </aside>
+                </section>
+                <section>
+                    <h1>Common Questions about LLMs</h1>
                     <ul>
-                        <li><strong>AI Enthusiasts:</strong> Discover how to leverage the power of large language models
-                            for
-                            various applications.</li>
-                        <li><strong>Developers:</strong> Learn how to use the LLMs for various applications such as text
-                            generation, chatbots, and more.</li>
-                        <li><strong>Researchers:</strong> Explore the capabilities and limitations of LLM models and
-                            their
-                            potential applications in various fields.</li>
+                        <li>Why do LLMs hallucinate?</li>
+                        <li>How to control hallucinations?</li>
+                        <li>Are LLMs good at 1+1?</li>
+                        <li>Why can't LLMs be trusted to provide source?</li>
                     </ul>
-                    <p>- Most academia focuses on architecture, training algorithms, and losses.</p>
-                    <p>- Industry emphasizes data, evaluation, and system efficiency.</p>
-                    <p>- You may be put off by all these talks on architecture, algorithm etc., but there is a lot of
-                        value
-                        to be derived from understanding the basics.</p>
-                </aside>
+                </section>
 
             </section>
 
             <section>
                 <section>
                     <h3>What is a Large Language Model?</h3>
-                    <p>LLMs are merely models that predict next word in a sequence</p>
-                    <img src="images/llm_predict.png" alt="LLM Prediction" />
+                    <img src="images/how-llms-work.gif" alt="LLM Prediction" />
+                    <div class="footer">
+                        Source: <a href="https://youtu.be/LPZh9BOjkQs?si=F163sSwIB0xdF7QK">"Large Language Models
+                            explained briefly" by 3Blue1Brown</a>
+                    </div>
                     <aside class="notes">
                         <ul>
-                            <li>Language modeling is at the heart of LLMs.</li>
-                            <li>Models can generate, summarize, translate, and answer questions.</li>
-                            <li>LLMs are trained to generate coherent text</li>
+                            <li>LLMs takes in a sequence of words and predict next word<< /li>
+                            <li>By doing this 1000s of times, it learns to generate coherent text.</li>
+                            <li>Everything from chatbots to coding assistants are based on this principle.</li>
                         </ul>
                     </aside>
                 </section>
+                <section>
+                    LLMs are trained on 1000s of books, articles, and websites to produce coherent text.
+                </section>
 
                 <section>
-                    <h3>LLMs are a proxy model of the real world</h3>
                     <div class="r-hstack justify-center" style="height: 400px;">
                         <div class="box fragment" data-fragment-index="2"
                             style="background: #D8BFD8; width: 240px; border-radius: 5px;">LLM</div>
@@ -115,10 +130,13 @@
                             style="background: #60A68C; width: 240px; border-radius: 5px;">World</div>
                     </div>
                     <div class="fragment" data-fragment-index="3">
-                        By learning and modelling language, LLMs can understand and model the world.
+                        By learning and modelling language, LLMs transitively model the world.
                     </div>
                     <aside class="notes">
-                        <p>LLMs are a proxy model of the real world.</p>
+                        <li>We know that languages models the world i.e., structure and pattern of the languages mimic
+                            the physical truth of real world </li>
+                        <li>LLMs captures the structure and patterns of the language, which in turn reflects the
+                            structure and patterns of the world.</li>
                     </aside>
                 </section>
             </section>
@@ -126,8 +144,7 @@
 
             <section>
                 <section>
-                    <h3>How to train your dragon
-                        model?</h3>
+                    <h3>How to train your <s>dragon</s> model?</h3>
                     <ul>
                         <li class="fragment">Borrow few 100 million dollars</li>
                         <li class="fragment">Download all of internet (250B pages; >1PB of data)</li>
@@ -150,7 +167,7 @@
 
                 <section>
                     <h3>Typical composition of Training data</h3>
-                    <img src="images/composition-of-pile.png" alt="Composition of Pile" />
+                    <img class="r-stretch" src="images/composition-of-pile.png" alt="Composition of Pile" />
                     <aside class="notes">
                         <p>Distribution of data in Pile and its composition.</p>
                     </aside>
@@ -176,7 +193,7 @@
                 </section>
 
                 <section>
-                    <h3>Training Chat assistants</h3>
+                    <h3>How Chat assistants are trained</h3>
                     <img src="images/chat_assistant.excalidraw.png" alt="LLM Alignment" />
                     <aside class="notes">
                         <p>LLMs transition to complex assistant models through SFT and RLHF.</p>
@@ -187,7 +204,9 @@
                     <h3>Supervised Fine-tuning</h3>
                     <img class="r-stretch" src="images/models_sft.jpg" alt="Models SFT" />
                     <aside class="notes">
-                        <p>SFT uses high-quality supervised datasets to train models.</p>
+                        <li>uses high-quality supervised datasets to train models</li>
+                        <li>teaches model to follow instructions and generate more accurate and relevant responses</li>
+                        <li>improves model's ability to understand and generate human-like text</li>
                     </aside>
                 </section>
 
@@ -195,7 +214,9 @@
                     <h3>Reinforcement Learning from Human Feedback (RLHF)</h3>
                     <img src="images/rlhf.png" alt="RLHF" />
                     <aside class="notes">
-                        <p>RLHF aligns models with human expectations through comparison labels.</p>
+                        <li>RLHF aligns models with human expectations through comparison labels.</li>
+                        <li>uses a reward model to compare model outputs and select the best one.</li>
+                        <li>encourages model to generate more coherent, relevant, and safe responses.</li>
                     </aside>
                 </section>
             </section>
@@ -234,7 +255,10 @@
                     <img class="fragment" src="frames/img0028.png" alt="frame 28">
                     <img class="fragment" src="frames/img0029.png" alt="frame 29">
                 </div>
-                <a href="https://lena-voita.github.io/nlp_course/language_modeling.html" class="footer">Source</a>
+                <div class="footer">
+                    source: <a
+                        href="https://lena-voita.github.io/nlp_course/language_modeling.html">https://lena-voita.github.io/nlp_course/language_modeling.html</a>
+                </div>
             </section>
 
             <section>
@@ -243,12 +267,12 @@
                 </section>
 
                 <section>
-                    <h3>Selecting a model: Proprietary</h3>
+                    <h3>Selecting a proprietary model</h3>
                     <img src="images/openai_models.jpg" alt="Model Selection" />
                 </section>
 
                 <section>
-                    <h3>Inspecting a model: Open Source</h3>
+                    <h3>Inspecting an open source model specifications</h3>
                     <pre><code data-line-numbers="|12|24|">{
       "architectures": [
         "MistralForCausalLM"
@@ -278,7 +302,7 @@
                 </section>
 
                 <section>
-                    <h3>Example API request to OpenAI</h3>
+                    <h3>Passing parameters for proprietary models</h3>
                     <pre><code data-line-numbers="|10|11|12|">from openai import OpenAI
     client = OpenAI()
     
@@ -298,8 +322,8 @@
                 </section>
 
                 <section>
-                    <h3>Example use of Mistral using Huggingface library</h3>
-                    <pre><code data-line-numbers="|13|14|15|">from transformers import AutoTokenizer, AutoModelForCausalLM
+                    <h3>Setting parameters for open source models</h3>
+                    <pre><code class="language-python" data-line-numbers="|13|14|15|">from transformers import AutoTokenizer, AutoModelForCausalLM
     
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
     model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
