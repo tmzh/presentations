@@ -267,12 +267,36 @@
                 </section>
 
                 <section>
-                    <h3>Selecting a proprietary model</h3>
+                    <h3>Proprietary Models</h3>
+                    <h4>Model Properties</h4>
                     <img src="images/openai_models.jpg" alt="Model Selection" />
                 </section>
 
+
                 <section>
-                    <h3>Inspecting an open source model specifications</h3>
+                    <h3>Proprietary Models</h3>
+                    <h4>Runtime Configurable Parameters</h4>
+                    <pre><code data-line-numbers="|10|11|12|">from openai import OpenAI
+    client = OpenAI()
+    
+    completion = client.chat.completions.create(
+      model="gpt-3.5-turbo",
+      messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
+      ],
+      temperature=0.7,
+      top_p=0.95, # use top_p or temp, not both
+      top_logprobs=3,
+      max_tokens=1000,
+    )
+    </code>
+</pre>
+                </section>
+
+                <section>
+                    <h3>Open Source Models</h3>
+                    <h4>Model Properties</h4>
                     <pre><code data-line-numbers="|12|24|">{
       "architectures": [
         "MistralForCausalLM"
@@ -302,27 +326,8 @@
                 </section>
 
                 <section>
-                    <h3>Passing parameters for proprietary models</h3>
-                    <pre><code data-line-numbers="|10|11|12|">from openai import OpenAI
-    client = OpenAI()
-    
-    completion = client.chat.completions.create(
-      model="gpt-3.5-turbo",
-      messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello!"}
-      ],
-      temperature=0.7,
-      top_p=0.95, # use top_p or temp, not both
-      top_logprobs=3,
-      max_tokens=1000,
-    )
-    </code>
-</pre>
-                </section>
-
-                <section>
-                    <h3>Setting parameters for open source models</h3>
+                    <h3>Open Source Models</h3>
+                    <h4>Runtime Configurable Parameters</h4>
                     <pre><code class="language-python" data-line-numbers="|13|14|15|">from transformers import AutoTokenizer, AutoModelForCausalLM
     
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
@@ -347,10 +352,10 @@
 
             <section>
                 <section>
-                    <h1>Knobs and controls of LLMs</h1>
+                    <h1>Understanding the Parameters of LLMs</h1>
                 </section>
                 <section>
-                    <h4>Temperature controlling</h3>
+                    <h4>Temperature</h3>
                         <img src="images/temperature.png" alt="Temperature Control" />
                         <aside class="notes">
                             <p>Higher temperature increases randomness in predictions.</p>
@@ -445,6 +450,27 @@
                             .
                         </div>
                     </div>
+                    <aside class="notes">
+                        <aside class="notes">
+                            <ul>
+                                <li>Treating every character as a token limits the amount of information that can be
+                                    handled within a given context.</li>
+                                <li>Word level tokenization can fit more information into a context than character level
+                                    tokenization, as it can handle longer words and phrases. However, it can't handle
+                                    out-of-vocabulary words.</li>
+                                <li>Word level tokenization also has a limitation with vocabulary size. As the size of
+                                    the vocabulary increases, the embedding weights and model size also increase.</li>
+                                <li>Sub-word level tokenization increases the amount of information that can be fitted
+                                    into a context, allowing the model to handle more complex language structures.</li>
+                                <li>In practice, sub-word level tokenization is more common due to its ability to
+                                    balance the trade-off between vocabulary size and context length.</li>
+                                <li>How do you know when to split a token? BPE algorithm preserves subwords that occur
+                                    frequently in the training data</li>
+                                <li>Current models often have a vocabulary size ranging from 50,000 to 250,000 tokens.
+                                </li>
+                            </ul>
+                        </aside>
+                    </aside>
                 </section>
             </section>
 
