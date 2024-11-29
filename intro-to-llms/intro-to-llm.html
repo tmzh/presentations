@@ -81,10 +81,10 @@
                     </aside>
                 </section>
                 <section>
-                    <h1>Common Questions about LLMs</h1>
+                    <h1>Understanding LLMs</h1>
                     <ul>
                         <li>Why do LLMs hallucinate?</li>
-                        <li>How to control hallucinations?</li>
+                        <li>Why does a model generate gibberish at times?</li>
                         <li>Are LLMs good at 1+1?</li>
                         <li>Why can't LLMs be trusted to provide source?</li>
                     </ul>
@@ -108,6 +108,17 @@
                         </ul>
                     </aside>
                 </section>
+
+                <section>
+                    <h3>Everything is next word prediction</h3>
+                    <div class="r-stack">
+                        <img class="fragment fade-out" data-fragment-index="0" src="images/simple_chat_prompt.jpg" />
+                        <img class="fragment current-visible" data-fragment-index="0"
+                            src="images/coding_assistant.jpg" />
+                        <img class="fragment" src="images/image_prompt.jpg" />
+                    </div>
+                </section>
+
                 <section>
                     LLMs are trained on 1000s of books, articles, and websites to produce coherent text.
                 </section>
@@ -144,7 +155,7 @@
 
             <section>
                 <section>
-                    <h3>How to train your <s>dragon</s> model?</h3>
+                    <h3>How to train your own <s>dragon</s> model?</h3>
                     <ul>
                         <li class="fragment">Borrow few 100 million dollars</li>
                         <li class="fragment">Download all of internet (250B pages; >1PB of data)</li>
@@ -156,8 +167,9 @@
                 </section>
                 <section>
                     <h3>Training costs big bucks</h3>
-                    <img src="images/openai compute cost.jpg" alt="Training Cost" />
-                    <aside>
+                    <img class="r-stretch" src="images/openai compute cost.jpg" alt="Training Cost" />
+
+                    <aside class="notes">
                         today’s models cost of order $100 million to train, plus or minus factor two or three
                         The models that are in training now and that will come out at various times later this year or
                         early next year are closer in cost to $1 billion
@@ -169,7 +181,8 @@
                     <h3>Typical composition of Training data</h3>
                     <img class="r-stretch" src="images/composition-of-pile.png" alt="Composition of Pile" />
                     <aside class="notes">
-                        <p>Distribution of data in Pile and its composition.</p>
+                        <li>The Pile is one example of a dataset that is used to train LLMs.</li>
+                        <li>The Pile is a collection of 22 smaller datasets, each with a different focus. </li>
                     </aside>
                 </section>
 
@@ -188,7 +201,11 @@
                     <h3>But Pre-training is Just the Beginning</h3>
                     <img src="images/llama_pretrained.jpg" alt="Pretrained Model" />
                     <aside class="notes">
-                        <p>Pre-training alone is not sufficient for a functional language model.</p>
+                        <li>Pre-training only encourages to learn probability distribution of the data</li>
+                        <li>It does not guarantee that the model will produce useful or high quality output</li>
+                        <li>For example, when asked a question it will produce gibberish after answering. It may keep
+                            producing QA pairs simply because it has seen them during training.</li>
+                        <li>It is as likely to quote a redditor as it is to quote a scientist</li>
                     </aside>
                 </section>
 
@@ -212,10 +229,20 @@
 
                 <section>
                     <h3>Reinforcement Learning from Human Feedback (RLHF)</h3>
-                    <img src="images/rlhf.png" alt="RLHF" />
+                    <img src="images/rhlf.jpg" alt="RLHF" />
+
+                    <div class="footer">
+                        source: <a href="https://arxiv.org/pdf/2309.00267">RLAIF vs. RLHF: Scaling Reinforcement
+                            Learning
+                            from Human Feedback with AI Feedback</a>
+                    </div>
                     <aside class="notes">
-                        <li>RLHF aligns models with human expectations through comparison labels.</li>
-                        <li>uses a reward model to compare model outputs and select the best one.</li>
+                        <li>Reinforcement Learning from Human Feedback focuses on maximizing human preference rather
+                            than merely replicating human responses.</li>
+                        <li>Humans find it much easier to compare two responses than to evaluate a single response.
+                        </li>
+                        <li>It uses comparison labels either generated by humans or AI</li>
+                        <li>RLHF uses a reward model to compare responses and a policy model to generate responses.
                         <li>encourages model to generate more coherent, relevant, and safe responses.</li>
                     </aside>
                 </section>
@@ -223,142 +250,56 @@
 
 
             <section>
-                <h2>How Does a Model Predict the Next Word?</h2>
-                <div class="r-stack">
-                    <img class="fragment" src="frames/img0001.png" alt="frame 1">
-                    <img class="fragment" src="frames/img0002.png" alt="frame 2">
-                    <img class="fragment" src="frames/img0003.png" alt="frame 3">
-                    <img class="fragment" src="frames/img0004.png" alt="frame 4">
-                    <img class="fragment" src="frames/img0005.png" alt="frame 5">
-                    <img class="fragment" src="frames/img0006.png" alt="frame 6">
-                    <img class="fragment" src="frames/img0007.png" alt="frame 7">
-                    <img class="fragment" src="frames/img0008.png" alt="frame 8">
-                    <img class="fragment" src="frames/img0009.png" alt="frame 9">
-                    <img class="fragment" src="frames/img0010.png" alt="frame 10">
-                    <img class="fragment" src="frames/img0011.png" alt="frame 11">
-                    <img class="fragment" src="frames/img0012.png" alt="frame 12">
-                    <img class="fragment" src="frames/img0013.png" alt="frame 13">
-                    <img class="fragment" src="frames/img0014.png" alt="frame 14">
-                    <img class="fragment" src="frames/img0015.png" alt="frame 15">
-                    <img class="fragment" src="frames/img0016.png" alt="frame 16">
-                    <img class="fragment" src="frames/img0017.png" alt="frame 17">
-                    <img class="fragment" src="frames/img0018.png" alt="frame 18">
-                    <img class="fragment" src="frames/img0019.png" alt="frame 19">
-                    <img class="fragment" src="frames/img0020.png" alt="frame 20">
-                    <img class="fragment" src="frames/img0021.png" alt="frame 21">
-                    <img class="fragment" src="frames/img0022.png" alt="frame 22">
-                    <img class="fragment" src="frames/img0023.png" alt="frame 23">
-                    <img class="fragment" src="frames/img0024.png" alt="frame 24">
-                    <img class="fragment" src="frames/img0025.png" alt="frame 25">
-                    <img class="fragment" src="frames/img0026.png" alt="frame 26">
-                    <img class="fragment" src="frames/img0027.png" alt="frame 27">
-                    <img class="fragment" src="frames/img0028.png" alt="frame 28">
-                    <img class="fragment" src="frames/img0029.png" alt="frame 29">
-                </div>
-                <div class="footer">
-                    source: <a
-                        href="https://lena-voita.github.io/nlp_course/language_modeling.html">https://lena-voita.github.io/nlp_course/language_modeling.html</a>
-                </div>
-            </section>
-
-            <section>
                 <section>
-                    <h2>How to use Large Language Models</h2>
+                    <h2>Under the hood</h2>
                 </section>
-
                 <section>
-                    <h3>Proprietary Models</h3>
-                    <h4>Model Properties</h4>
-                    <img src="images/openai_models.jpg" alt="Model Selection" />
+                    <h2>How next token prediction works?</h2>
+                    <div class="r-stack">
+                        <img class="fragment" src="frames/img0001.png" alt="frame 1">
+                        <img class="fragment" src="frames/img0002.png" alt="frame 2">
+                        <img class="fragment" src="frames/img0003.png" alt="frame 3">
+                        <img class="fragment" src="frames/img0004.png" alt="frame 4">
+                        <img class="fragment" src="frames/img0005.png" alt="frame 5">
+                        <img class="fragment" src="frames/img0006.png" alt="frame 6">
+                        <img class="fragment" src="frames/img0007.png" alt="frame 7">
+                        <img class="fragment" src="frames/img0008.png" alt="frame 8">
+                        <img class="fragment" src="frames/img0009.png" alt="frame 9">
+                        <img class="fragment" src="frames/img0010.png" alt="frame 10">
+                        <img class="fragment" src="frames/img0011.png" alt="frame 11">
+                        <img class="fragment" src="frames/img0012.png" alt="frame 12">
+                        <img class="fragment" src="frames/img0013.png" alt="frame 13">
+                        <img class="fragment" src="frames/img0014.png" alt="frame 14">
+                        <img class="fragment" src="frames/img0015.png" alt="frame 15">
+                        <img class="fragment" src="frames/img0016.png" alt="frame 16">
+                        <img class="fragment" src="frames/img0017.png" alt="frame 17">
+                        <img class="fragment" src="frames/img0018.png" alt="frame 18">
+                        <img class="fragment" src="frames/img0019.png" alt="frame 19">
+                        <img class="fragment" src="frames/img0020.png" alt="frame 20">
+                        <img class="fragment" src="frames/img0021.png" alt="frame 21">
+                        <img class="fragment" src="frames/img0022.png" alt="frame 22">
+                        <img class="fragment" src="frames/img0023.png" alt="frame 23">
+                        <img class="fragment" src="frames/img0024.png" alt="frame 24">
+                        <img class="fragment" src="frames/img0025.png" alt="frame 25">
+                        <img class="fragment" src="frames/img0026.png" alt="frame 26">
+                        <img class="fragment" src="frames/img0027.png" alt="frame 27">
+                        <img class="fragment" src="frames/img0028.png" alt="frame 28">
+                        <img class="fragment" src="frames/img0029.png" alt="frame 29">
+                    </div>
+                    <div class="footer">
+                        source: <a
+                            href="https://lena-voita.github.io/nlp_course/language_modeling.html">https://lena-voita.github.io/nlp_course/language_modeling.html</a>
+                    </div>
                 </section>
-
-
                 <section>
-                    <h3>Proprietary Models</h3>
-                    <h4>Runtime Configurable Parameters</h4>
-                    <pre><code data-line-numbers="|10|11|12|">from openai import OpenAI
-    client = OpenAI()
-    
-    completion = client.chat.completions.create(
-      model="gpt-3.5-turbo",
-      messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello!"}
-      ],
-      temperature=0.7,
-      top_p=0.95, # use top_p or temp, not both
-      top_logprobs=3,
-      max_tokens=1000,
-    )
-    </code>
-</pre>
-                </section>
-
-                <section>
-                    <h3>Open Source Models</h3>
-                    <h4>Model Properties</h4>
-                    <pre><code data-line-numbers="|12|24|">{
-      "architectures": [
-        "MistralForCausalLM"
-      ],
-      "attention_dropout": 0.0,
-      "bos_token_id": 1,
-      "eos_token_id": 2,
-      "hidden_act": "silu",
-      "hidden_size": 4096,
-      "initializer_range": 0.02,
-      "intermediate_size": 14336,
-      "max_position_embeddings": 32768,
-      "model_type": "mistral",
-      "num_attention_heads": 32,
-      "num_hidden_layers": 32,
-      "num_key_value_heads": 8,
-      "rms_norm_eps": 1e-05,
-      "rope_theta": 1000000.0,
-      "sliding_window": null,
-      "tie_word_embeddings": false,
-      "torch_dtype": "bfloat16",
-      "transformers_version": "4.42.0.dev0",
-      "use_cache": true,
-      "vocab_size": 32768
-    }</code>
-</pre>
-                </section>
-
-                <section>
-                    <h3>Open Source Models</h3>
-                    <h4>Runtime Configurable Parameters</h4>
-                    <pre><code class="language-python" data-line-numbers="|13|14|15|">from transformers import AutoTokenizer, AutoModelForCausalLM
-    
-    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
-    model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
-    
-    inputs = tokenizer("Hello, my name is", return_tensors="pt")
-    
-    # Similar settings to OpenAI's API
-    outputs = model.generate(
-        **inputs,
-        max_length=1000,
-        do_sample=True,
-        temperature=0.7,
-        top_p=0.95,
-        top_k=0,
-        num_return_sequences=1,
-    )
-    </code></pre>
-                </section>
-            </section>
-
-
-            <section>
-                <section>
-                    <h1>Understanding the Parameters of LLMs</h1>
+                    <h2>Controlling the output of LLMs</h2>
                 </section>
                 <section>
                     <h4>Temperature</h3>
                         <img src="images/temperature.png" alt="Temperature Control" />
                         <aside class="notes">
-                            <p>Higher temperature increases randomness in predictions.</p>
+                            <li>Higher temperature increases randomness in predictions.</li>
+                            <li>Temperatures works by 1/T scaling the logits before softmax.</li>
                         </aside>
                 </section>
 
@@ -382,6 +323,10 @@
                     <p class="fragment" data-fragment-index="1"><strong>1000 tokens ≈ 750 words</strong></p>
                     <p class="fragment" data-fragment-index="2">Models can only process a fixed context length measured
                         in tokens.</p>
+                    <aside class="notes">Tokenization is a crucial step in processing text data for LLMs. It involves
+                        breaking down text into smaller units called tokens, which can be more easily managed by the
+                        model. Tokens are leant using algorithms like Byte Pair Encoding (BPE) separately from a single
+                        pass over the data even before model training begins</aside>
                 </section>
 
                 <section>
@@ -472,8 +417,103 @@
                         </aside>
                     </aside>
                 </section>
+
+                <section>
+                    <h3>Putting them all together</h3>
+                    <a
+                        href="https://poloclub.github.io/transformer-explainer/">https://poloclub.github.io/transformer-explainer/</a>
+
+                </section>
             </section>
 
+
+            <section>
+                <section>
+                    <h2>How to use Large Language Models</h2>
+                </section>
+
+                <section>
+                    <h3>Proprietary Models</h3>
+                    <h4>Model Properties</h4>
+                    <img src="images/openai_models.jpg" alt="Model Selection" />
+                </section>
+
+
+                <section>
+                    <h3>Proprietary Models</h3>
+                    <h4>Runtime Configurable Parameters</h4>
+                    <pre><code data-line-numbers="|10|11|12|">from openai import OpenAI
+    client = OpenAI()
+    
+    completion = client.chat.completions.create(
+      model="gpt-3.5-turbo",
+      messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
+      ],
+      temperature=0.7,
+      top_p=0.95, # use top_p or temp, not both
+      top_logprobs=3,
+      max_tokens=1000,
+    )
+    </code>
+</pre>
+                </section>
+
+                <section>
+                    <h3>Open Source Models</h3>
+                    <h4>Model Properties</h4>
+                    <pre><code data-line-numbers="|12|24|">{
+      "architectures": [
+        "MistralForCausalLM"
+      ],
+      "attention_dropout": 0.0,
+      "bos_token_id": 1,
+      "eos_token_id": 2,
+      "hidden_act": "silu",
+      "hidden_size": 4096,
+      "initializer_range": 0.02,
+      "intermediate_size": 14336,
+      "max_position_embeddings": 32768,
+      "model_type": "mistral",
+      "num_attention_heads": 32,
+      "num_hidden_layers": 32,
+      "num_key_value_heads": 8,
+      "rms_norm_eps": 1e-05,
+      "rope_theta": 1000000.0,
+      "sliding_window": null,
+      "tie_word_embeddings": false,
+      "torch_dtype": "bfloat16",
+      "transformers_version": "4.42.0.dev0",
+      "use_cache": true,
+      "vocab_size": 32768
+    }</code>
+</pre>
+                </section>
+
+                <section>
+                    <h3>Open Source Models</h3>
+                    <h4>Runtime Configurable Parameters</h4>
+                    <pre><code class="language-python" data-line-numbers="|13|14|15|">from transformers import AutoTokenizer, AutoModelForCausalLM
+    
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
+    model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
+    
+    inputs = tokenizer("Hello, my name is", return_tensors="pt")
+    
+    # Similar settings to OpenAI's API
+    outputs = model.generate(
+        **inputs,
+        max_length=1000,
+        do_sample=True,
+        temperature=0.7,
+        top_p=0.95,
+        top_k=0,
+        num_return_sequences=1,
+    )
+    </code></pre>
+                </section>
+            </section>
 
             <section>
                 <section>
