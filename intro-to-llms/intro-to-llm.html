@@ -81,13 +81,17 @@
                     </aside>
                 </section>
                 <section>
-                    <h1>Understanding LLMs</h1>
+                    <h3>Key Questions about Large Language Models (LLMs)</h3>
                     <ul>
                         <li>Why do LLMs hallucinate?</li>
                         <li>Why does a model generate gibberish at times?</li>
+                        <li>Why do people troll LLMs asking them to count R's in strawberry?</li>
                         <li>Are LLMs good at 1+1?</li>
+                        <li>Why LLMs break when you ask about SolidGoldMagikarp?</li>
                         <li>Why can't LLMs be trusted to provide source?</li>
                     </ul>
+
+                    </aside>
                 </section>
 
             </section>
@@ -184,6 +188,11 @@
                         <li>The Pile is one example of a dataset that is used to train LLMs.</li>
                         <li>The Pile is a collection of 22 smaller datasets, each with a different focus. </li>
                     </aside>
+                </section>
+
+                <section>
+                    <h3>Training data is extensively curated</h3>
+                    <img src="images/macrodata-refinement.png" alt="" class="r-stretch">
                 </section>
 
                 <section>
@@ -317,16 +326,16 @@
                 </section>
 
                 <section>
-                    <h3>Understanding Tokens</h3>
+                    <h2>Understanding Tokens</h2>
+                </section>
+                <section>
                     <p class="fragment" data-fragment-index="0">Tokens are the smallest units of text recognized by
                         models.</p>
                     <p class="fragment" data-fragment-index="1"><strong>1000 tokens ≈ 750 words</strong></p>
                     <p class="fragment" data-fragment-index="2">Models can only process a fixed context length measured
                         in tokens.</p>
-                    <aside class="notes">Tokenization is a crucial step in processing text data for LLMs. It involves
-                        breaking down text into smaller units called tokens, which can be more easily managed by the
-                        model. Tokens are leant using algorithms like Byte Pair Encoding (BPE) separately from a single
-                        pass over the data even before model training begins</aside>
+                    <aside class="notes"> Tokens are leant using algorithms like Byte Pair Encoding (BPE) separately
+                        from a single pass over the data even before model training begins</aside>
                 </section>
 
                 <section>
@@ -396,25 +405,21 @@
                         </div>
                     </div>
                     <aside class="notes">
-                        <aside class="notes">
-                            <ul>
-                                <li>Treating every character as a token limits the amount of information that can be
-                                    handled within a given context.</li>
-                                <li>Word level tokenization can fit more information into a context than character level
-                                    tokenization, as it can handle longer words and phrases. However, it can't handle
-                                    out-of-vocabulary words.</li>
-                                <li>Word level tokenization also has a limitation with vocabulary size. As the size of
-                                    the vocabulary increases, the embedding weights and model size also increase.</li>
-                                <li>Sub-word level tokenization increases the amount of information that can be fitted
-                                    into a context, allowing the model to handle more complex language structures.</li>
-                                <li>In practice, sub-word level tokenization is more common due to its ability to
-                                    balance the trade-off between vocabulary size and context length.</li>
-                                <li>How do you know when to split a token? BPE algorithm preserves subwords that occur
-                                    frequently in the training data</li>
-                                <li>Current models often have a vocabulary size ranging from 50,000 to 250,000 tokens.
-                                </li>
-                            </ul>
-                        </aside>
+                        <ul>
+                            <li>Treating every character as a token limits the amount of information that can be
+                                handled within a given context.</li>
+                            <li>Word level tokenization can fit more information into a context than character level
+                                tokenization, as it can handle longer words and phrases. However, it can't handle
+                                out-of-vocabulary words.</li>
+                            <li>Word level tokenization also increases vocabulary size. As the size of
+                                the vocabulary increases, the embedding weights and model size also increase.</li>
+                            <li>Subword tokenization: Balances context and vocabulary size; handles complex language.
+                                Uses algorithms like BPE.</li>
+                            <li>When to split a word? BPE algorithm preserves subwords that occur
+                                frequently in the training data</li>
+                            <li>Typical sub-word vocabulary size: 50,000 - 250,000 tokens.</li>
+                            </li>
+                        </ul>
                     </aside>
                 </section>
 
@@ -423,6 +428,39 @@
                     <a
                         href="https://poloclub.github.io/transformer-explainer/">https://poloclub.github.io/transformer-explainer/</a>
 
+                </section>
+
+                <section>
+                    <h3>Re-examining Key Questions about Large Language Models</h3>
+                    <ul>
+                        <li class="fragment">Why do LLMs hallucinate?</li>
+                        <li class="fragment">Why does a model generate gibberish at times?</li>
+                        <li class="fragment">Why do people troll LLMs asking them to count R's in strawberry?</li>
+                        <li class="fragment">Are LLMs good at 1+1?</li>
+                        <li class="fragment">Why LLMs break when you ask about SolidGoldMagikarp?</li>
+                        <li class="fragment">Why can't LLMs be trusted to provide source?</li>
+                    </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li><b>Hallucination:</b> LLMs generate text probabilistically. While training encourages
+                                relevant outputs, discovering novel relationships is inherent to their function, making
+                                some level of hallucination unavoidable, especially with incoherent data.</li>
+                            <li><b>Gibberish:</b> Multiple factors contribute to gibberish: using a weak base model,
+                                inappropriate quantization (distorting token relationships), or "magic words" (unique
+                                tokens removed from training, disrupting learned relationships). These issues make all
+                                output tokens equally likely.</li>
+                            <li><b>Strawberry:</b> LLMs lack the ability to decompose and understand tokens
+                                as sequence of characters. They struggle with character level questions unless training
+                                data has explicit examples in suffiicient quantity.</li>
+                            <li><b>Number Handling:</b> LLMs treat numbers as categorical tokens. Common numbers might
+                                have dedicated tokens, while uncommon ones are split, lacking inherent ordinal
+                                relationships. While LLMs *can* learn ordinality, it requires extensive training and
+                                consistent tokenization, which is often lacking. Expect inaccuracies with uncommon
+                                numbers.</li>
+                            <li><b>Source Attribution:</b> Tokenization breaks text into sub-word units. Accurate source
+                                reproduction requires an exact token sequence. The stochastic nature of generation means
+                                a single incorrect token can derail the entire reference.</li>
+                        </ul>
                 </section>
             </section>
 
@@ -556,11 +594,11 @@
                     <h3>Deliberate problem solving using thoughts</h3>
                     <img class="r-stretch" src="images/llm_thinking.jpg" alt="CoT">
                     <aside class="notes">
-                        LLMs are encouraged to generate, search and evaluate thoughts as a coherent language sequence
-                        that
-                        serves as an intermediate step toward problem solving. Tradeoff is that it increases the length
-                        of
-                        the prompt and the response. This is the method used in O1 models announced by Open AI.
+                        <li>LLMs are encouraged to generate, search and evaluate thoughts as a coherent language
+                            sequence that serves as an intermediate step toward problem solving.</li>
+                        <li>Tradeoff is that it increases the length of the prompt and the response.</li>
+                        <li>This is the method used in O1 models announced by Open AI.</li>
+                        <li>Yesterday Qwen released a 32B model which is said to compete with O1</li>
                     </aside>
                 </section>
 
@@ -646,6 +684,52 @@
 
                     </aside>
                 </section>
+                <section>
+                    <h3>LM Chatbot Arena</h3>
+                    <img src="images/lmsys_chatbot_arena.jpg" alt="LM Chatbot Arena">
+                    <div>🏆 Elo rating system for model ranking</div>
+                    <aside class="notes">
+                        <ul>
+                            <li>🤖 Comparative evaluation platform for language models</li>
+                            <li>👥 Crowdsourced human judgments</li>
+                            <li>🔄 Continuous updates with new models</li>
+                            <li>🔍 Insights into model strengths and weaknesses</li>
+                            <li>provides a dynamic, user-driven approach to LLM evaluation </li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Aider LLM Leaderboards</h3>
+                    <img src="images/aider_code_editing_benchmark.jpg" alt="LM Chatbot Arena">
+                    <div>Coding tasks benchmkarks</div>
+                    <aside class="notes">
+                        <ul>
+                            <li>Coding task specific benchmark</li>
+                            <li>Separate rankings for different aspects such as refactoring, editing</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3> Berkeley Function-Calling Leaderboard </h3>
+                    <img src="images/function_calling_benchmark.jpg" alt="LM Chatbot Arena">
+                    <div>Function calling benchmkarks</div>
+                    <aside class="notes">
+                        <li>Evaluates function calling at multiple complexities</li>
+                        <li>Single Turn: In a single-turn interaction, there is exactly one exchange between the user
+                            and the assistant. The user sends a single input, and the assistant responds with a single
+                            output.</li>
+                        <li>Multi-Step: Multi-step refers to an interaction where the assistant performs several
+                            internal function calls to address a single user request. The result of one call may serve
+                            as input for subsequent calls.</li>
+                        <li>Multi-Turn: Multi-turn interaction involves multiple exchanges between the user and the
+                            assistant. Each turn can contain multiple steps, allowing for more complex workflows across
+                            several interactions.</li>
+
+                        </ul>
+                    </aside>
+                </section>
 
                 <section>
                     <h2>3. Practical Considerations</h2>
@@ -709,339 +793,205 @@
                     <h4>Self-Hosting</h4>
                     <img src="images/self-hosting-roi.jpg" alt="Self-Hosting">
                     <p>Upfront Investment in GPUs ≠ Cost Savings</p>
-                    <aside>
-
-                        Self-Hosting: Significant upfront investment in hardware (GPUs) is required, accompanied by
-                        maintenance. Cost savings are not guaranteed. (Image: `self-hosting-roi.jpg` explained the
-                        return on investment for self-hosting.)
-                        Nvidia, literally pitched to their investors & datacenter customers, in their 2023 investor
-                        presentation - the “market opportunity” on renting H100s at $4/hr
-                        For most of 2023, the H100 prices felt like they would forever be above $4.70 (unless you
-                        were
-                        willing to do a huge upfront downpayment)
-                        At the start of 2024, the H100 prices reached approximately $2.85 across multiple providers.
-                        In Aug 2024, if you're willing to auction for a small slice of H100 time (days to weeks),
-                        you can start finding H100 GPUs for $1 to $2 an hour.
+                    <aside class="notes">
+                        <li>Significant upfront investment in hardware (GPUs) is required, accompanied by
+                            maintenance. Cost savings are not guaranteed.</li>
+                        <li>Nvidia, literally pitched to their investors & datacenter customers, in their 2023 investor
+                            presentation - the “market opportunity” on renting H100s at $4/hr</li>
+                        <li>For most of 2023, the H100 prices felt like they would forever be above $4.70 (unless you
+                            were willing to do a huge upfront downpayment)</li>
+                        <li>At the start of 2024, the H100 prices reached approximately $2.85 across multiple providers.
+                        </li>
+                        <li>In Aug 2024, if you're willing to auction for a small slice of H100 time (days to weeks),
+                            you can start finding H100 GPUs for $1 to $2 an hour.</li>
                     </aside>
                 </section>
 
-
-
-                <!-- 
+            </section>
             <section>
                 <section>
-                    <h1>What to look for when choosing a model?</h1>
+                    <h2>The current state-of-play in AI</h2>
+                    <img src="images/closed_vs_open.png" alt="">
+                    <aside class="notes">
+                        <li>OpenAI had a year+ lead in creating a GPT-4 class model.</li>
+                        <li>Now there are four GPT-4 class models.</li>
+                        <li>Llama 3.2 closes the gap between closed-source and open-weight models</li>
+                        <li>Small 8B models are as performant as GPT3 when they came out</li>
+                    </aside>
                 </section>
+
                 <section>
-                    <h2>Model Types</h2>
-                    <div class="r-hstack">
-                        <div class="fragment fade-left div-box">
-                            <strong>Pre-trained Models</strong>
-                            <ul>
-                                <li>e.g., Llama 3, GPT Base</li>
-                            </ul>
-                        </div>
-                        <div class="fragment fade-left div-box">
-                            <strong>Instruct-Tuned Variants</strong>
-                            <ul>
-                                <li>e.g., GPT-3.5-turbo, Llama-3.2-3B-Instruct</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="r-hstack">
-                        <div class="fragment fade-left div-box">
-                            <strong>Coding Assistants</strong>
-                            <ul>
-                                <li>Codestral, CodeLlama, Davinci Codex etc.</li>
-                            </ul>
-                        </div>
-                        <div class="fragment fade-left div-box">
-                            <strong>Mixture-of-Experts</strong>
-                            <ul>
-                                <li>e.g., GPT-4, Mixtral</li>
-                            </ul>
-                        </div>
+                    <h2>Open AI</h2>
+                    <div style="text-align: left;">
+                        <strong>Models:</strong>
+                        <ul>
+                            <li>Pre-trained & Instruct-tuned: GPT3, GPT4, GPT 3.5 Turbo, GPT 4 Turbo</li>
+                            <li>Multi-modal & generation: GPT4 Vision, GPT4o, GPT4o-mini, Whisper, Suno, DALL-E 3
+                            </li>
+                            <li>Reasoning: o1, o1-mini</li>
+                        </ul>
+                        <strong>Notable features:</strong>
+                        <ul>
+                            <li>🤝 Strategic investment from Microsoft</li>
+                            <li>🔧 Fine-tuning API offered</li>
+                            <li>📞 Function calling, 📊 JSON mode, 💾 Context-caching (since Oct 2024)
+                            </li>
+                        </ul>
                     </div>
                 </section>
 
                 <section>
-                    <h2>How good is a model?</h2>
-                </section>
-                <section>
-                    <h2>Evaluating LLMs is hard</h2>
-
-                    <ul>
-                        <li>🎯 Using benchmarks <i class="fas fa-arrow-right"></i> task-specific, tricky broader
-                            evaluation</li>
-                        <li>👥 Human evaluations <i class="fas fa-arrow-right"></i> inconsistent, challenging consensus
-                        </li>
-                        <li>🤖 vs 👤 Disagreement between metrics & human judgment </li>
-                        <li>🌐 Don't reflect performance in real-world</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h3>How are LLMs evaluated?</h3>
-                    <img class="r-stretch" src="images/evaluation_datasets.jpg" alt="Evaluation Datasets">
-                </section>
-                <section>
-                    <h3>🎯 Task-Specific Metrics</h3>
-                    <ul>
-                        <li>📊 Perplexity -> Language modeling</li>
-                        <li>🔢 Pass@K -> Open-ended tasks (e.g., code generation)</li>
-                        <li>✅ Accuracy -> Pre-defined answers (e.g., Q&A)</li>
-                        <li>🔄 BLEU/ROUGE -> Reference-based tasks (e.g., translation)</li>
-                        </li>
-                    </ul>
-                </section> 
-
-            <section>
-                <h3>LM Chatbot Arena</h3>
-                <img src="images/lmsys_chatbot_arena.jpg" alt="LM Chatbot Arena">
-                <div>🏆 Elo rating system for model ranking</div>
-                <aside class="notes">
-                    <ul>
-                        <li>🤖 Comparative evaluation platform for language models</li>
-                        <li>👥 Crowdsourced human judgments</li>
-                        <li>🔄 Continuous updates with new models</li>
-                        <li>🔍 Insights into model strengths and weaknesses</li>
-                        <li>provides a dynamic, user-driven approach to LLM evaluation </li>
-                    </ul>
-                </aside>
-            </section>
-
-            <section>
-                <h3>Aider LLM Leaderboards</h3>
-                <img src="images/aider_code_editing_benchmark.jpg" alt="LM Chatbot Arena">
-                <div>🏆 Elo rating system for model ranking</div>
-                <aside class="notes">
-                    <ul>
-                        <li>🤖 Comparative evaluation platform for language models</li>
-                        <li>👥 Crowdsourced human judgments</li>
-                        <li>🔄 Continuous updates with new models</li>
-                        <li>🔍 Insights into model strengths and weaknesses</li>
-                        <li>provides a dynamic, user-driven approach to LLM evaluation </li>
-                    </ul>
-                </aside>
-            </section>
-
-
-            <section>
-                <h3>Licensing Considerations</h3>
-                <ul>
-                    <li class="fragment"><strong>Commercial Services</strong>
+                    <h2>Anthropic</h2>
+                    <div style="text-align: left;">
+                        <strong>Models:</strong>
+                        <div>
+                            <ul>
+                                <li>Claude 3.0 Haiku, Sonnet, Opus</li>
+                                <li>Claude 3.5 Sonnet</li>
+                            </ul>
+                        </div>
+                        <strong>Key features:</strong>
                         <ul>
-                            <li>Regional availability</li>
-                            <li>Data Protection Compliance</li>
+                            <li>👤 Founded by Dario Amodei (ex-VP of OpenAI)</li>
+                            <li>⚡ Sonnet 3.5: Top performing model, comparable performance to GPT-4o</li>
                         </ul>
-                    </li>
-                    <li class="fragment"><strong>Open Weights</strong>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Google</h2>
+                    <div style="text-align: left;">
+                        <strong>Models:</strong>
                         <ul>
-                            <li>Availability ≠ free use</li>
-                            <li>Verify licensing restrictions</li>
+                            <li>Open Models: Gemma-1 (2B, 7B), Gemma-2 (2B, 9B, 27B)</li>
+                            <li>Proprietary Models: Gemini 1.5 (128B), Gemini 2 (540B)</li>
                         </ul>
-                    </li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Cost Factors</h3>
-            </section>
-            <section>
-                <h4>Model size</h4>
-                <img class="r-stretch" src="images/size_vs_throughput.jpg" alt="Model Size">
-                <p>More Params -> Expensive & Slower</p>
-            </section>
-            <section>
-                <h4>Cost vs Performance</h4>
-                <img src="images/llm_cost.jpg" alt="">
-                <div>For common tasks, most models would do OK.</div>
-            </section>
-
-            <section>
-                <h4>Context Length</h4>
-                <img src="images/context_sizes.jpg" alt="Context Length">
-                Models with larger context windows can handle longer conversations and docuemnts.
-            </section>
-
-            <section>
-                <h4>Self-Hosting</h4>
-                <img src="images/self-hosting-roi.jpg" alt="Self-Hosting">
-                <p>Upfront Investment in GPUs ≠ Cost Savings</p>
-                <aside>
-                    Nvidia, literally pitched to their investors & datacenter customers, in their 2023 investor
-                    presentation - the “market opportunity” on renting H100s at $4/hr
-                    For most of 2023, the H100 prices felt like they would forever be above $4.70 (unless you
-                    were
-                    willing to do a huge upfront downpayment)
-                    At the start of 2024, the H100 prices reached approximately $2.85 across multiple providers.
-                    In Aug 2024, if you're willing to auction for a small slice of H100 time (days to weeks),
-                    you can start finding H100 GPUs for $1 to $2 an hour.
-                </aside>
-            </section>
-
-            </section> 
-        -->
-
-                <section>
-                    <section>
-                        <h2>The current state-of-play in AI</h2>
-                        <img src="images/closed_vs_open.png" alt="">
-                        <aside>
-                            OpenAI had a year+ lead in creating a GPT-4 class model.
-                            Now there are four GPT-4 class models.
-                            Llama 3.2 closes the gap between closed-source and open-weight models
-                        </aside>
-                    </section>
-
-                    <section>
-                        <h2>Open AI</h2>
-                        <div style="text-align: left;">
-                            <strong>Models:</strong>
-                            <ul>
-                                <li>Pre-trained & Instruct-tuned: GPT3, GPT4, GPT 3.5 Turbo, GPT 4 Turbo</li>
-                                <li>Multi-modal & generation: GPT4 Vision, GPT4o, GPT4o-mini, Whisper, Suno, DALL-E 3
-                                </li>
-                                <li>Reasoning: o1, o1-mini</li>
-                            </ul>
-                            <strong>Notable features:</strong>
-                            <ul>
-                                <li>🤝 Strategic investment from Microsoft</li>
-                                <li>🔧 Fine-tuning API offered</li>
-                                <li>📞 Function calling, 📊 JSON mode, 💾 Context-caching (since Oct 2024)
-                                </li>
-                            </ul>
-                        </div>
-                    </section>
-
-                    <section>
-                        <h2>Anthropic</h2>
-                        <div style="text-align: left;">
-                            <strong>Models:</strong>
-                            <div>
-                                <ul>
-                                    <li>Claude 3.0 Haiku, Sonnet, Opus</li>
-                                    <li>Claude 3.5 Sonnet</li>
-                                </ul>
-                            </div>
-                            <strong>Key features:</strong>
-                            <ul>
-                                <li>👤 Founded by Dario Amodei (ex-VP of OpenAI)</li>
-                                <li>⚡ Sonnet 3.5: Top performing model, comparable performance to GPT-4o</li>
-                            </ul>
-                        </div>
-                    </section>
-
-                    <section>
-                        <h2>Google</h2>
-                        <div style="text-align: left;">
-                            <strong>Models:</strong>
-                            <ul>
-                                <li>Open Models: Gemma-1 (2B, 7B), Gemma-2 (2B, 9B, 27B)</li>
-                                <li>Proprietary Models: Gemini 1.5 (128B), Gemini 2 (540B)</li>
-                            </ul>
-                            <strong>Key features:</strong>
-                            <ul>
-                                <li>Gemma: Lightweight, strong open models; pre-trained on 2T-13T English tokens</li>
-                                <li>Gemini: Long context (2M tokens) & pioneered context caching</li>
-                            </ul>
-                        </div>
-                    </section>
-
-                    <section>
-                        <h2>Alibaba Cloud</h2>
-                        <div style="text-align: left;">
-                            <strong>Model Series:</strong>
-                            <ul>
-                                <li>Qwen, Qwen1.5, Qwen2, Qwen2.5 (0.5B - 110B)</li>
-                            </ul>
-                            <strong>Qwen2.5 Highlights:</strong>
-                            <ul>
-                                <li>📚 18T token pre-training</li>
-                                <li>💡 Enhanced knowledge, coding & math skills</li>
-                                <li>📄 8K+ token generation & structured data handling</li>
-                            </ul>
-                        </div>
-                    </section>
-
-                    <section>
-                        <h2>Meta</h2>
-                        <div style="text-align: left;">
-                            <strong>Model Series:</strong>
-                            <ul>
-                                <li>LLaMA: 7B-65B; LLaMA 2: 7B-70B; LLaMA 3/3.1/3.2: 8B-405B</li>
-                            </ul>
-                            <strong>LLaMA 3.2 Highlights:</strong>
-                            <ul>
-                                <li>🏆 Competitive with GPT-4, GPT-4o, Claude 3.5 Sonnet</li>
-                                <li>📊 405B params, 15T tokens, 128K context</li>
-                                <li>💻 Training scale-up: 2,048 A100 (65B) → 16,000+ H100 (405B)</li>
-                            </ul>
-                        </div>
-                    </section>
-
-                    <section>
-                        <h2>Mistral</h2>
-                        <div style="text-align: left;">
-                            <strong>Models:</strong>
-                            <ul>
-                                <li>Open Models: Mistral (7B), Mistral Nemo (12B), Pixtral (22B), Codestral (22B)</li>
-                                <li>Proprietary Models: Large 2 (123B), Mixtral (8×7B, 8×22B)</li>
-                            </ul>
-                            <strong>Key features:</strong>
-                            <ul>
-                                <li>🇫🇷 French startup, Apache 2 licensed models</li>
-                                <li>Proprietary models on Le Platform; fine-tuning API offered</li>
-                                <li>Mistral 7B outperforms larger models; Large 2 matches top models like GPT-4o, Llama
-                                    3
-                                    405B</li>
-
-                            </ul>
-                        </div>
-                    </section>
-                </section>
-                <section>
-                    <section>
-                        <h1>LLMs power more than just text</h1>
-                    </section>
-
-                    <section>
-                        <h2>Understand and generate images</h2>
-                        <img class="r-stretch" src="images/sketch_to_site.jpg" alt="Image Generation">
-                    </section>
-
-                    <section>
-                        <h2>Interact using voice</h2>
-                        <img class="r-stretch" src="images/speech_to_speech.jpg" alt="Voice Interaction">
-                    </section>
-
-                    <section>
-                        <h2>Making Music</h2>
-                        <img class="r-stretch" src="images/music_gen.jpg" alt="Music Generation">
-                    </section>
-
-                    <section>
-                        <h2>Video Generation</h2>
-                        <video class="r-stretch" src="images/penguin.mp4" controls></video>
-                    </section>
+                        <strong>Key features:</strong>
+                        <ul>
+                            <li>Gemma: Lightweight, strong open models; pre-trained on 2T-13T English tokens</li>
+                            <li>Gemini: Long context (2M tokens) & pioneered context caching</li>
+                        </ul>
+                    </div>
                 </section>
 
                 <section>
-                    <section>
-                        <h1>Future Directions in GenAI</h1>
-                    </section>
-
-                    <section>
-                        <h2>Scaling Laws of Large models</h2>
-                        <img class="r-stretch" src="images/chinchilla_scaling.jpg" alt="Scaling Laws">
-                        <p>Models are not showing signs of upper limit of performance.</p>
-                    </section>
-
-                    <section>
-                        <video class="r-stretch" src="images/HLS_720.mp4" controls></video>
-                    </section>
-
+                    <h2>Alibaba Cloud</h2>
+                    <div style="text-align: left;">
+                        <strong>Model Series:</strong>
+                        <ul>
+                            <li>Qwen, Qwen1.5, Qwen2, Qwen2.5 (0.5B - 110B)</li>
+                        </ul>
+                        <strong>Qwen2.5 Highlights:</strong>
+                        <ul>
+                            <li>📚 18T token pre-training</li>
+                            <li>💡 Enhanced knowledge, coding & math skills</li>
+                            <li>📄 8K+ token generation & structured data handling</li>
+                        </ul>
+                    </div>
                 </section>
+
+                <section>
+                    <h2>Meta</h2>
+                    <div style="text-align: left;">
+                        <strong>Model Series:</strong>
+                        <ul>
+                            <li>LLaMA: 7B-65B; LLaMA 2: 7B-70B; LLaMA 3/3.1/3.2: 8B-405B</li>
+                        </ul>
+                        <strong>LLaMA 3.2 Highlights:</strong>
+                        <ul>
+                            <li>🏆 Competitive with GPT-4, GPT-4o, Claude 3.5 Sonnet</li>
+                            <li>📊 405B params, 15T tokens, 128K context</li>
+                            <li>💻 Training scale-up: 2,048 A100 (65B) → 16,000+ H100 (405B)</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Mistral</h2>
+                    <div style="text-align: left;">
+                        <strong>Models:</strong>
+                        <ul>
+                            <li>Open Models: Mistral (7B), Mistral Nemo (12B), Pixtral (22B), Codestral (22B)</li>
+                            <li>Proprietary Models: Large 2 (123B), Mixtral (8×7B, 8×22B)</li>
+                        </ul>
+                        <strong>Key features:</strong>
+                        <ul>
+                            <li>🇫🇷 French startup, Apache 2 licensed models</li>
+                            <li>Proprietary models on Le Platform; fine-tuning API offered</li>
+                            <li>Mistral 7B outperforms larger models; Large 2 matches top models like GPT-4o, Llama
+                                3
+                                405B</li>
+
+                        </ul>
+                    </div>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h1>Future Directions in GenAI</h1>
+                </section>
+
+                <section>
+                    <h2>GPUs go brrrr</h2>
+                    <img class="r-stretch" src="images/gpus_go_brrr.jpg" alt="Scaling Laws">
+                    <p>Simple📈: More compute = better models</p>
+                    <aside class="notes">The head of Rich Sutton says ‘GPUs go bitter’, referencing his ‘bitter lesson’
+                        that most clever AI innovations are ultimately useless as they hamstring AI performance and are
+                        surpassed by methods that make fewer assumptions & use more compute/data, while the
+                        personification of AI academia, where cleverness is rewarded and heavy use of compute is
+                        considered cheating and ugly, sheds tears and complains about approaches like GPT-3 beating
+                        decades of clever academic systems.</aside>
+                </section>
+                <section>
+                    <h2>Shrinking foundation model creation market</h2>
+                    <img src="images/shrinking_foundation_models.jpg" alt="" class="r-stretch">
+                </section>
+
+                <section>
+                    <h2>The Four wars of the AI Stack</h2>
+                    <div class="r-stack">
+                        <img class="fragment current-visible" data-fragment-index="0" src="images/data_quality_war.jpg"
+                            height="450" />
+                        <img class="fragment current-visible" data-fragment-index="1" src="images/compute_power_war.jpg"
+                            height="450" />
+                        <img class="fragment current-visible" data-fragment-index="2"
+                            src="images/multi_modality_war.jpg" height="450" />
+                        <img class="fragment" src="images/ops_war.jpg" height="450" />
+                    </div>
+                    <aside class="notes">
+
+
+                        Data War:
+                        <li>OpenAI partners with Axel Springer; also deals with AP and Data Partnerships.</li>
+                        <li>NYT lawsuit against OpenAI to halt GPT operations.</li>
+                        <li>Apple offers $50M for data contracts with publishers.</li>
+                        <li>Growing interest in synthetic data at NeurIPS and DeepMind.</li>
+
+                        GPU/Inference War:
+                        <li>Mixtral output token prices drop from ~$2 to $0.27 in a week.</li>
+                        <li>Benchmark competition between Anyscale and other inference providers.</li>
+                        <li>Research on new architectures (Mamba, RWKV) emerging.</li>
+                        <li>Shifting compute off Nvidia with Modular, tinycorp, and Apple MLX.</li>
+
+                        Multimodality War:
+                        <li>Midjourney soft-launches v6, reports >$200M/year revenue.</li>
+                        <li>Assembly AI raises $50M Series C for AI model infrastructure.</li>
+                        <li>Replicate secures $40M Series B for AI engineers.</li>
+                        <li>Suno AI exits stealth mode; steady enhancements in point solutions.</li>
+                        <li>OpenAI and Google advance God Models to compete broadly.</li>
+
+                        RAG/Ops War:
+                        <li>Debate on the necessity of Vector DBs; power users adopt new options like turbopuffer.</li>
+                        <li>Competition between LangChain (v0.1) and LlamaIndex (with Step-Wise Agent Execution).</li>
+                        <li>Ongoing LLMOps innovations (HumanLoop’s .prompt file, Openlayer) vs. framework-driven tools
+                            like</li>
+                        <li>LangSmith.</li>
+                        <li>Martian announces $9M seed funding for new approaches.</li>
+
+                    </aside>
+                </section>
+            </section>
         </div>
     </div>
 
