@@ -448,9 +448,26 @@
                     </ul>
                     <aside class="notes">
                         <ul>
-                            <li><b>Hallucination:</b> LLMs generate text probabilistically. While training encourages
-                                relevant outputs, discovering novel relationships is inherent to their function, making
-                                some level of hallucination unavoidable, especially with incoherent data.</li>
+                            <li>
+                                <b>Hallucination:</b>
+                                <ul>
+                                    <li>
+                                        <p>LLMs predict the next token probabilistically. While training encourages
+                                            relevant outputs, the inherent exploration of novel relationships makes some
+                                            level of hallucination unavoidable, especially with inconsistent data.</p>
+                                    </li>
+                                    <li>
+                                        <p>At one end of the spectrum, consider search engines. They take the prompt and
+                                            return one of the most similar "training documents" verbatim from their
+                                            database. This search engine exhibits a "creativity problem" - it will never
+                                            respond with something new.</p>
+                                    </li>
+                                    <li>
+                                        <p>An LLM is 100% creative and faces the hallucination problem. A search engine
+                                            is 0% creative and encounters the creativity problem.</p>
+                                    </li>
+                                </ul>
+                            </li>
                             <li><b>Gibberish:</b> Multiple factors contribute to gibberish: using a weak base model,
                                 inappropriate quantization (distorting token relationships), or "magic words" (unique
                                 tokens removed from training, disrupting learned relationships). These issues make all
@@ -578,6 +595,31 @@
                 </section>
 
                 <section>
+                    <img class="r-stretch" src="images/hallucination_meme.jpg" alt="Hallucination Example" />
+                    <p>Working with LLMs can be a frustrating experience</p>
+                    <aside class="notes">
+                        <p>People actually mean they don't want an LLM Assistant to hallucinate.</p>
+                        <p>An LLM Assistant is more than just the LLM although LLM is at the heart of it; it's a complex
+                            system.</p>
+                        <p>It's the responsibility of
+                            the developer to tailor safety measures to their specific use case and to ensure that the
+                            model's outputs are safe and appropriate for the context.
+                        </p>
+
+                    </aside>
+                </section>
+                <section>
+                    <h3>Addressing LLM Limitations</h3>
+                    <img src="images/addressing_llm_limitations.jpg" alt="Addressing LLM Limitations" />
+                    <aside class="notes">
+                        <ul>There are many ways to address LLM limitations. I will walk through a few</ul>
+                        <ul>RAG: Retriever-augmented generation</ul>
+                        <ul>Tool Use: Supplement LLMs with knowledge from external tools</ul>
+                        <ul>Prompt Engineering: Guide the model to produce more accurate results</ul>
+                    </aside>
+                </section>
+
+                <section>
                     <h3>Retriever-augmented generation (RAG)</h3>
                     <img class="r-stretch" src="images/rag.png" alt="RAG">
                     <aside class="notes">
@@ -608,6 +650,9 @@
                     </aside>
                 </section>
 
+
+
+
             </section>
 
             <section>
@@ -616,7 +661,7 @@
                 </section>
 
                 <section>
-                    <h3>1. Understanding LLM Types</h3>
+                    <h3>Different Kinds of Models</h3>
                     <div class="r-hstack">
                         <div class="fragment fade-left div-box">
                             <strong>Pre-trained Models</strong>
@@ -662,8 +707,6 @@
                 </section>
 
                 <section>
-
-                    <h2>2. Evaluating LLM Performance</h2>
                     <p>Evaluating LLMs is complex and multifaceted. There's no single perfect metric.</p>
                     <ul>
                         <li class="fragment fade-in-then-out"><strong>Benchmarks:</strong> Task-specific, tricky broader
@@ -738,11 +781,11 @@
                 </section>
 
                 <section>
-                    <h2>3. Practical Considerations</h2>
+                    <h2>Practical Considerations</h2>
                 </section>
 
                 <section>
-                    <h3>3.1 Licensing and Legal</h3>
+                    <h3>1 Licensing and Legal</h3>
                     <ul>
                         <li class="fragment"><strong>Commercial Services</strong>
                             <ul>
@@ -760,7 +803,7 @@
                 </section>
 
                 <section>
-                    <h3>3.2 Cost and Resource Requirements</h3>
+                    <h3>2 Cost and Resource Requirements</h3>
                 </section>
 
                 <section>
@@ -945,17 +988,6 @@
                 </section>
 
                 <section>
-                    <h2>GPUs go brrrr</h2>
-                    <img class="r-stretch" src="images/gpus_go_brrr.jpg" alt="Scaling Laws">
-                    <p>Simple📈: More compute = better models</p>
-                    <aside class="notes">The head of Rich Sutton says ‘GPUs go bitter’, referencing his ‘bitter lesson’
-                        that most clever AI innovations are ultimately useless as they hamstring AI performance and are
-                        surpassed by methods that make fewer assumptions & use more compute/data, while the
-                        personification of AI academia, where cleverness is rewarded and heavy use of compute is
-                        considered cheating and ugly, sheds tears and complains about approaches like GPT-3 beating
-                        decades of clever academic systems.</aside>
-                </section>
-                <section>
                     <h2>Shrinking foundation model creation market</h2>
                     <img src="images/shrinking_foundation_models.jpg" alt="" class="r-stretch">
                 </section>
@@ -974,34 +1006,48 @@
                     <aside class="notes">
 
 
-                        Data War:
+                        <b>Data War:</b>
+                        <li>A battle for control of high-quality data, pitting content creators against AI models that
+                            seek to consume their work.</li>
                         <li>OpenAI partners with Axel Springer; also deals with AP and Data Partnerships.</li>
                         <li>NYT lawsuit against OpenAI to halt GPT operations.</li>
                         <li>Apple offers $50M for data contracts with publishers.</li>
                         <li>Growing interest in synthetic data at NeurIPS and DeepMind.</li>
 
-                        GPU/Inference War:
+                        <b>GPU/Inference War:</b>
+                        <li>A conflict between those with access to powerful GPUs for AI training and inference, and
+                            those without, highlighting the uneven distribution of computational resources.</li>
                         <li>Mixtral output token prices drop from ~$2 to $0.27 in a week.</li>
                         <li>Benchmark competition between Anyscale and other inference providers.</li>
                         <li>Research on new architectures (Mamba, RWKV) emerging.</li>
                         <li>Shifting compute off Nvidia with Modular, tinycorp, and Apple MLX.</li>
 
-                        Multimodality War:
+                        <b>Multimodality War:</b>
+                        <li>A struggle for dominance in AI model capabilities, with specialist models competing against
+                            general-purpose models that aim to handle multiple data types.</li>
                         <li>Midjourney soft-launches v6, reports >$200M/year revenue.</li>
-                        <li>Assembly AI raises $50M Series C for AI model infrastructure.</li>
-                        <li>Replicate secures $40M Series B for AI engineers.</li>
                         <li>Suno AI exits stealth mode; steady enhancements in point solutions.</li>
                         <li>OpenAI and Google advance God Models to compete broadly.</li>
 
-                        RAG/Ops War:
+                        <b>RAG/Ops War:</b>
+                        <li>A fight over the infrastructure and tools needed to build and deploy reliable AI
+                            applications, focusing on databases, frameworks, and operational processes </li>
                         <li>Debate on the necessity of Vector DBs; power users adopt new options like turbopuffer.</li>
                         <li>Competition between LangChain (v0.1) and LlamaIndex (with Step-Wise Agent Execution).</li>
                         <li>Ongoing LLMOps innovations (HumanLoop’s .prompt file, Openlayer) vs. framework-driven tools
-                            like</li>
-                        <li>LangSmith.</li>
-                        <li>Martian announces $9M seed funding for new approaches.</li>
-
+                            like LangSmith.</li>
                     </aside>
+                </section>
+
+                <section>
+                    <h2>GPUs go brrrr</h2>
+                    <img class="r-stretch" src="images/gpus_go_brrr.jpg" alt="Scaling Laws">
+                    <p>Simple📈: More compute = better models</p>
+                    <aside class="notes">Rich Sutton's "bitter lesson" exposes a fundamental conflict in AI: the
+                        academic preference for elegant, clever algorithms versus the reality that brute-force
+                        approaches (massive data and compute) consistently win. This explains the frustration
+                        surrounding models like GPT-3, which easily surpass decades of research focused on clever
+                        solutions.</aside>
                 </section>
             </section>
         </div>
